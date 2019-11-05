@@ -30,7 +30,7 @@ public class GoodsService {
     /**
     *@author:xiaoxin on 2019/11/5
     *@return:
-    *@description: 分页查询spu
+    *@description: 分页查询商品
     */
     public PageResult<SpuBo> querySpuBoByPage(String key,Boolean saleable,Integer page,Integer rows) {
         //添加搜索条件
