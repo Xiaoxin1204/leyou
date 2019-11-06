@@ -23,9 +23,12 @@ public class SpecificationService {
         return groups;
     }
 
-    public List<SpecParam> queryParamsByGid(Long gid) {
+    public List<SpecParam> queryParamsByGid(Long gid,Long cid,Boolean generic,Boolean searching) {
         SpecParam specParam = new SpecParam();
         specParam.setGroupId(gid);
+        specParam.setCid(cid);
+        specParam.setGeneric(generic);
+        specParam.setSearching(searching);
         List<SpecParam> specParams = specParamMapper.select(specParam);
         return specParams;
     }

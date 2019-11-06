@@ -39,7 +39,11 @@ public class BrandService {
     public void saveBrand(Brand brand, List<Long> cids) {
         brandMapper.insert(brand);
         for (Long cid : cids) {
-            brandMapper.saveCategoriesAndBrand(cid,brand.getId());
+            brandMapper.saveCategoriesAndBrand(cid, brand.getId());
         }
+    }
+
+    public List<Brand> queryBrandsByCid(Long cid) {
+        return brandMapper.queryBrandsByCid(cid);
     }
 }
