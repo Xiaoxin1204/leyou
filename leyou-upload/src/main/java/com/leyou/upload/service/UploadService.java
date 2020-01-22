@@ -51,8 +51,8 @@ public class UploadService {
             StorePath storePath = fastFileStorageClient.uploadFile(file.getInputStream(), file.getSize(), ext, null);
             // 生成url地址，返回
             //return "http://image.leyou.com/" + originalFilename;
-            //return "http://image.leyou.com/" + storePath.getFullPath();
-            return "http://106.15.72.234/" + storePath.getFullPath();
+            return "http://image.leyou.com/" + storePath.getFullPath();
+            //return "http://106.15.72.234/" + storePath.getFullPath();
         } catch (IOException e) {
             LOGGER.info("服务器内部错误：{}", originalFilename);
             e.printStackTrace();

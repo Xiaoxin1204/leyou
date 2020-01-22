@@ -1,19 +1,25 @@
 package com.leyou.search.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.leyou.common.pojo.PageResult;
 import com.leyou.item.pojo.*;
 import com.leyou.search.client.BrandClient;
 import com.leyou.search.client.CategoryClient;
 import com.leyou.search.client.GoodsClient;
 import com.leyou.search.client.SpecificationClient;
 import com.leyou.search.pojo.Goods;
-import com.netflix.discovery.util.StringUtil;
+import com.leyou.search.pojo.SearchRequest;
+import com.leyou.search.repository.GoodRepository;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
+import org.elasticsearch.index.query.Operator;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.elasticsearch.core.query.FetchSourceFilter;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -31,6 +37,9 @@ public class SearchService {
     @Autowired
     private BrandClient brandClient;
 
+    @Autowired
+    private GoodRepository goodRepository;
+
     private static final ObjectMapper MAPPER = new ObjectMapper();
     public Goods buildGoods(Spu spu) throws IOException {
         List<String> names = categoryClient.queryNameByIds(Arrays.asList(spu.getCid1(), spu.getCid2(), spu.getCid3()));
@@ -46,6 +55,7 @@ public class SearchService {
             map.put("title", sku.getTitle());
             map.put("price", sku.getPrice());
             map.put("image", StringUtils.isBlank(sku.getImages()) ? "" : StringUtils.split(sku.getImages(), ",")[0]);
+            skuMapList.add(map);
         });
 
         List<SpecParam> params = specificationClient.queryParams(null, spu.getCid3(), null, null);
@@ -108,5 +118,19 @@ public class SearchService {
         return result;
     }
 
+    public PageResult<Goods> search(SearchRequest searchRequest) {
+        if (StringUtils.isBlank(searchRequest.getKey())) {
+            return null;
+        }
+        NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder();
+        queryBuilder.withQuery(QueryBuilders.matchQuery("all",searchRequest.getKey()).operator(Operator.AND));
+        queryBuilder.withSourceFilter(new FetchSourceFilter(new String[]{"id","skus","subTitle"},null));
+
+        queryBuilder.withPageable(PageRequest.of(searchRequest.getPage()-1,searchRequest.getSize()));
+        Page<Goods> goodsPage = goodRepository.search(queryBuilder.build());
+
+        return new PageResult<>(goodsPage.getTotalElements(),goodsPage.getTotalPages(),goodsPage.getContent());
+
+    }
 }
 
