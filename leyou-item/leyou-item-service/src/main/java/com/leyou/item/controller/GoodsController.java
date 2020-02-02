@@ -77,6 +77,14 @@ public class GoodsController {
     @PutMapping("goods")
     public ResponseEntity<Void> updateGoods(@RequestBody SpuBo spuBo) {
         goodsService.updateGoods(spuBo);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+    @GetMapping("{id}")
+    public ResponseEntity<Spu> querySpuById(@PathVariable("id")Long id) {
+        Spu spu = goodsService.querySpuById(id);
+        if (spu == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(spu);
     }
 }

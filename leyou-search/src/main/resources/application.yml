@@ -11,6 +11,14 @@ spring:
     allow-bean-definition-overriding: true
   jackson:
     default-property-inclusion: non_null
+  rabbitmq:
+    host: 106.15.72.234
+    virtual-host: /leyou
+    username: leyou
+    password: leyou
+    template:
+      exchange: LEYOU.ITEM.EXCHANGE
+    publisher-confirms: true
 eureka:
   client:
     service-url:

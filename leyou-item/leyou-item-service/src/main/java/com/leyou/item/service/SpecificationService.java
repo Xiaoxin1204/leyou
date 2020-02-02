@@ -32,4 +32,13 @@ public class SpecificationService {
         List<SpecParam> specParams = specParamMapper.select(specParam);
         return specParams;
     }
+
+    public List<SpecGroup> queryGroupsWithParam(Long cid) {
+        List<SpecGroup> groups = queryGroupsByCid(cid);
+        groups.forEach(group ->{
+            List<SpecParam> params = queryParamsByGid(group.getId(), null, null, null);
+            group.setParams(params);
+        });
+        return groups;
+    }
 }
