@@ -6,19 +6,21 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="leyou-item-interface" />
+        <module name="leyou-common" />
+        <module name="leyou-upload" />
+        <module name="leyou-search" />
         <module name="leyou-item-service" />
-        <module name="leyou-sms" />
-        <module name="leyou-user-interface" />
-        <module name="leyou-user-service" />
+        <module name="leyou-registry" />
         <module name="leyou-auth-service" />
         <module name="leyou-gateway" />
-        <module name="leyou-upload" />
-        <module name="leyou-common" />
-        <module name="leyou-goods-web" />
-        <module name="leyou-registry" />
-        <module name="leyou-search" />
+        <module name="leyou-user-service" />
+        <module name="leyou-cart" />
         <module name="leyou-auth-common" />
+        <module name="leyou-goods-web" />
+        <module name="leyou-user-interface" />
+        <module name="leyou-order" />
+        <module name="leyou-item-interface" />
+        <module name="leyou-sms" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -30,12 +32,14 @@
       <module name="leyou-auth" options="-parameters" />
       <module name="leyou-auth-common" options="-parameters" />
       <module name="leyou-auth-service" options="-parameters" />
+      <module name="leyou-cart" options="-parameters" />
       <module name="leyou-common" options="-parameters" />
       <module name="leyou-gateway" options="-parameters" />
       <module name="leyou-goods-web" options="-parameters" />
       <module name="leyou-item" options="-parameters" />
       <module name="leyou-item-interface" options="-parameters" />
       <module name="leyou-item-service" options="-parameters" />
+      <module name="leyou-order" options="-parameters" />
       <module name="leyou-registry" options="-parameters" />
       <module name="leyou-search" options="-parameters" />
       <module name="leyou-sms" options="-parameters" />

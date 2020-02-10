@@ -66,7 +66,7 @@ public class GoodsController {
     }
 
     @GetMapping("sku/list")
-    public ResponseEntity<List<Sku>> querySkusBySpuId(@RequestParam("id")Long spuId) {
+    public ResponseEntity<List<Sku>> querySkusBySpuId(@RequestParam("id") Long spuId) {
         List<Sku> skus = goodsService.querySkusBySpuId(spuId);
         if (CollectionUtils.isEmpty(skus)) {
             return ResponseEntity.notFound().build();
@@ -79,12 +79,22 @@ public class GoodsController {
         goodsService.updateGoods(spuBo);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
     @GetMapping("{id}")
-    public ResponseEntity<Spu> querySpuById(@PathVariable("id")Long id) {
+    public ResponseEntity<Spu> querySpuById(@PathVariable("id") Long id) {
         Spu spu = goodsService.querySpuById(id);
         if (spu == null) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(spu);
+    }
+
+    @GetMapping("sku/{skuId}")
+    public ResponseEntity<Sku> querySkuBySkuId(@PathVariable Long skuId) {
+        Sku sku = goodsService.querySkuBySkuId(skuId);
+        if (sku == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(sku);
     }
 }

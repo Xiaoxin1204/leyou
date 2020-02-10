@@ -15,12 +15,28 @@ zuul:
     search-service: /search/**
     user-service: /user/**
     auth-service: /auth/**
+    cart-service: /cart/**
+    order-service: /order/**
   host:
     connect-timeout-millis: 15000 #HTTP连接超时要比Hystrix的大
     socket-timeout-millis: 60000   #socket超时
   add-host-header: true
   sensitive-headers:  #覆盖默认敏感头信息
+
+leyou:
+  jwt:
+    pubKeyPath: D:\\tmp\\rsa\\rsa.pub # 公钥地址
+    cookieName: LY_TOKEN
+  filter:
+    allowPaths:
+      - /api/auth
+      - /api/search
+      - /api/user/register
+      - /api/user/check
+      - /api/user/code
+      - /api/item
 ribbon:
   ReadTimeout: 60000
   ConnectTimeout: 60000
+
 
