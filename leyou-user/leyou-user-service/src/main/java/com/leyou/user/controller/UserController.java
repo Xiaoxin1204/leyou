@@ -34,6 +34,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+
     @PostMapping("register")
     public ResponseEntity<Void> register(@Valid User user, @RequestParam("code") String code) {
 
